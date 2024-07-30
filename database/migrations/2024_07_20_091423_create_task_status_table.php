@@ -12,8 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('task_status', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->foreignId('task_id')->constrained()->onDelete('cascade');
+            $table->foreignId('status_id')->constrained();
+            $table->timestamp('status_date')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->primary(['task_id', 'status_id']);
         });
     }
 
